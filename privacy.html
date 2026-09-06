@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プライバシーポリシー｜luxi-shorts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="./_style.css">
+</head>
+<body>
+<div class="doc">
+  <header>
+    <span class="eyebrow">luxi-shorts ／ TikTok アプリ</span>
+    <h1 class="cyan">プライバシーポリシー<span class="rule"></span></h1>
+    <p class="meta">最終更新 2026-09-06</p>
+    <nav><a href="./">概要</a><a href="./terms.html">利用規約</a></nav>
+  </header>
+
+  <section>
+    <h2>前提</h2>
+    <p><code>luxi-shorts</code> は、運営者が自分の TikTok アカウントに自分の動画を投稿するためだけの個人用ツールです。運営者本人のパソコン上でのみ動作し、サーバーを持ちません。<strong>運営者以外の利用者はいません。</strong></p>
+  </section>
+
+  <section>
+    <h2>扱う情報と保存先</h2>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>情報</th><th>使いみち</th><th>保存先</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>アクセストークン<br>リフレッシュトークン</td>
+            <td>投稿を実行するため</td>
+            <td>運営者のパソコン内のファイル1つ<br>（<code>config/tiktok_token.json</code>）</td>
+          </tr>
+          <tr>
+            <td>アカウント名<br>選べる公開範囲<br>動画の長さの上限</td>
+            <td>投稿前の確認と、規定に反する投稿を止めるため</td>
+            <td>保存しない（実行中のみ画面に表示）</td>
+          </tr>
+          <tr>
+            <td>投稿した動画のID・投稿日時</td>
+            <td>投稿記録として残すため</td>
+            <td>運営者のパソコン内のファイル<br>（<code>tiktok.json</code>）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>やらないこと</h2>
+    <ul>
+      <li>取得した情報を第三者に提供・販売・共有しません。</li>
+      <li>外部のサーバーやクラウドに送信しません（TikTok の API を除く）。</li>
+      <li>広告配信、行動追跡、プロファイリングには使いません。</li>
+      <li>他の TikTok 利用者の情報は取得しません。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>保存期間と削除</h2>
+    <p>トークンは、運営者が TikTok の設定画面から本アプリの連携を解除するか、パソコン上のファイルを削除した時点で無効になります。リフレッシュトークンは TikTok の仕様により発行から365日で失効します。</p>
+    <div class="note cyan">連携の解除は、TikTok アプリの「設定とプライバシー → セキュリティ → アプリの管理」からいつでも行えます。</div>
+  </section>
+
+  <section>
+    <h2>問い合わせ</h2>
+    <p>本ポリシーに関する問い合わせ先は、TikTok 開発者ポータルに登録された運営者の連絡先メールアドレスです。内容は予告なく変更されることがあります。</p>
+  </section>
+
+  <footer><p>luxi-shorts ／ 理想の人生 with AI</p></footer>
+</div>
+</body>
+</html>
