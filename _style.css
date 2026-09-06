@@ -1,0 +1,37 @@
+:root {
+  --navy: #0B1220; --navy-raised: #131C2E; --navy-line: #24304a;
+  --amber: #FFB020; --cyan: #3AD7FF; --ink: #E8ECF4; --ink-dim: #98A4BB;
+  --sans: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --mono: "Roboto Mono", ui-monospace, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--navy); color: var(--ink); font-family: var(--sans);
+  font-size: 15px; line-height: 1.9; margin: 0; padding: 48px 20px 80px;
+  display: flex; justify-content: center;
+}
+.doc { width: 100%; max-width: 660px; display: flex; flex-direction: column; gap: 36px; }
+header { display: flex; flex-direction: column; gap: 8px; }
+.eyebrow { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); font-weight: 500; }
+h1 { font-size: 27px; font-weight: 700; margin: 0; text-wrap: balance; }
+h1 .rule { display: block; width: 44px; height: 3px; background: var(--amber); margin-top: 16px; }
+h1.cyan .rule { background: var(--cyan); }
+.meta { font-size: 12.5px; color: var(--ink-dim); font-family: var(--mono); margin: 0; }
+section { display: flex; flex-direction: column; gap: 10px; }
+h2 { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--cyan); margin: 0; text-transform: uppercase; }
+p, li { margin: 0; max-width: 44em; }
+ul { margin: 0; padding-left: 1.25em; display: flex; flex-direction: column; gap: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--navy-line); vertical-align: top; }
+th { color: var(--ink-dim); font-weight: 500; font-size: 12px; letter-spacing: .04em; white-space: nowrap; }
+.wrap { overflow-x: auto; border: 1px solid var(--navy-line); background: var(--navy-raised); }
+.note {
+  background: var(--navy-raised); border: 1px solid var(--navy-line);
+  border-left: 3px solid var(--amber); padding: 16px 18px; color: var(--ink-dim); font-size: 14px;
+}
+.note.cyan { border-left-color: var(--cyan); }
+code { font-family: var(--mono); font-size: 13px; color: var(--amber); word-break: break-all; }
+a { color: var(--cyan); }
+nav { display: flex; gap: 18px; font-size: 14px; }
+footer { border-top: 1px solid var(--navy-line); padding-top: 20px; font-size: 12.5px; color: var(--ink-dim); }
+img.mark { width: 72px; height: 72px; border-radius: 12px; }
