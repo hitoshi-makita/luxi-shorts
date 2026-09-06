@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>認証コード受け取り｜luxi-shorts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="./_style.css">
+<style>
+  .status {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    font-size: 12px; font-weight: 500; letter-spacing: .04em;
+    padding: 5px 12px 5px 10px; border-radius: 999px;
+    border: 1px solid var(--navy-line); background: var(--navy-raised); color: var(--ink-dim);
+  }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .status.ok { color: #4ED6A1; border-color: #2c5f4d; }
+  .status.err { color: #FF6B5A; border-color: #6b332c; }
+  .value {
+    display: flex; flex-direction: column; gap: 10px;
+    background: var(--navy-raised); border: 1px solid var(--navy-line);
+    border-left: 3px solid var(--amber); padding: 16px 18px;
+  }
+  .value.quiet { border-left-color: var(--navy-line); }
+  .value code { font-size: 13px; line-height: 1.6; word-break: break-all; color: var(--ink); user-select: all; }
+  .caption { font-size: 12px; color: var(--ink-dim); }
+  button.copy {
+    align-self: flex-start; font: inherit; font-size: 13px; font-weight: 500;
+    color: var(--navy); background: var(--amber); border: 0; border-radius: 3px;
+    padding: 7px 16px; cursor: pointer;
+  }
+  button.copy.sec { background: transparent; color: var(--cyan); border: 1px solid var(--navy-line); }
+  button.copy:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="doc">
+  <header>
+    <span class="eyebrow">luxi-shorts ／ TikTok 連携</span>
+    <h1>認証コード受け取り<span class="rule"></span></h1>
+    <p class="meta" id="lede">TikTok の許可画面から戻ってきた URL を、PowerShell に貼るためのページです。</p>
+  </header>
+
+  <section id="got" hidden>
+    <span class="status ok">認証コードを受け取りました</span>
+    <h2>これを丸ごとコピーして PowerShell に貼る</h2>
+    <div class="value">
+      <code id="fullUrl"></code>
+      <button class="copy" id="copyUrl" type="button">URL をコピー</button>
+    </div>
+    <div class="value quiet">
+      <span class="caption">code（URL がうまく貼れないときはこちらだけでも通ります）</span>
+      <code id="codeOnly"></code>
+      <button class="copy sec" id="copyCode" type="button">code だけコピー</button>
+    </div>
+    <p class="caption">コードは一度きり・数分で失効します。失効したら <code>python tiktok.py --auth</code> をやり直してください。</p>
+  </section>
+
+  <section id="failed" hidden>
+    <span class="status err">TikTok 側で許可されませんでした</span>
+    <div class="value" style="border-left-color:#FF6B5A;">
+      <code id="errText"></code>
+      <span class="caption">よくある原因：許可画面でキャンセルした／スコープが付いていない／Redirect URI が登録値と違う。</span>
+    </div>
+  </section>
+
+  <section id="idle" hidden>
+    <span class="status">待機中：まだコードは来ていません</span>
+    <h2>TikTok に登録する Redirect URI</h2>
+    <div class="value">
+      <code id="selfUri"></code>
+      <button class="copy" id="copySelf" type="button">Redirect URI をコピー</button>
+      <span class="caption">末尾まで完全一致させること。</span>
+    </div>
+  </section>
+
+  <footer>
+    <p>このページは認証コードを画面に映すだけで、送信も保存もしません。</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  var code = p.get("code"), error = p.get("error");
+  var show = function (id) { document.getElementById(id).hidden = false; };
+  var selfUri = location.origin + location.pathname;
+  document.getElementById("selfUri").textContent = selfUri;
+
+  if (code) {
+    document.getElementById("fullUrl").textContent = location.href;
+    document.getElementById("codeOnly").textContent = code;
+    document.getElementById("lede").textContent = "許可が下りました。下の URL をコピーして「戻り先 URL:」に貼ってください。";
+    show("got");
+  } else if (error) {
+    document.getElementById("errText").textContent = error + (p.get("error_description") ? " — " + p.get("error_description") : "");
+    show("failed");
+  } else { show("idle"); }
+
+  var bind = function (id, get) {
+    var b = document.getElementById(id); if (!b) return;
+    var o = b.textContent;
+    b.addEventListener("click", function () {
+      var done = function (ok) { b.textContent = ok ? "コピーしました" : "手で選択してください"; setTimeout(function(){ b.textContent = o; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(get()).then(function(){done(true);}, function(){done(false);});
+      } else { done(false); }
+    });
+  };
+  bind("copyUrl", function () { return location.href; });
+  bind("copyCode", function () { return code || ""; });
+  bind("copySelf", function () { return selfUri; });
+})();
+</script>
+</body>
+</html>
